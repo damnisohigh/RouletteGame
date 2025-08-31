@@ -6,19 +6,43 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseAuth
+import FirebaseFirestore    
 
 struct ContentView: View {
+    @State private var isSignedIn = false
+    @State private var errorMessage: String?
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            if isSignedIn {
+                TabBarView()
+            } else {
+                VStack {
+                    ProgressView("Signing In...")
+                    if let errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .padding()
+                    }
+                }
+                .onAppear {
+                    AuthService.shared.signInAnonymously { result in
+                        switch result {
+                        case .success(_):
+                            DispatchQueue.main.async {
+                                isSignedIn = true
+                            }
+                        case .failure(let error):
+                            DispatchQueue.main.async {
+                                errorMessage = error.localizedDescription
+                            }
+                        }
+                    }
+                }
+            }
         }
-        .padding()
     }
 }
 
-#Preview {
-    ContentView()
-}
