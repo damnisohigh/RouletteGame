@@ -17,7 +17,6 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                // MARK: - Account Actions
                 VStack(spacing: 15) {
                     Button(action: logOut) {
                         HStack {
@@ -52,7 +51,6 @@ struct SettingsView: View {
                 Divider()
                     .padding(.vertical, 10)
 
-                // MARK: - App Actions
                 VStack(spacing: 15) {
                     Button(action: rateApp) {
                         HStack {
@@ -93,7 +91,6 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: - Actions
     func logOut() {
         do {
             try Auth.auth().signOut()

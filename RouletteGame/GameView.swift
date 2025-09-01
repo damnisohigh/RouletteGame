@@ -29,7 +29,6 @@ struct GameView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                // User info
                 VStack {
                     Text(username)
                         .font(.title)
@@ -41,7 +40,6 @@ struct GameView: View {
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 15).fill(Color.black.opacity(0.2)))
 
-                // Roulette numbers grid
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), spacing: 10) {
                     ForEach(numbers, id: \.self) { num in
                         Button("\(num)") {
@@ -60,7 +58,6 @@ struct GameView: View {
                 }
                 .padding()
 
-                // Color selection
                 HStack(spacing: 20) {
                     ForEach(RouletteColor.allCases, id: \.self) { color in
                         Button(color.rawValue.capitalized) {
@@ -78,7 +75,6 @@ struct GameView: View {
                     }
                 }
 
-                // Bet and spin
                 HStack {
                     
                     let safeBalance = max(balance, 1) // если баланс 0, Stepper не крашит
@@ -110,7 +106,7 @@ struct GameView: View {
                                 .rotationEffect(.degrees(spinAnimation ? 360 : 0))
                                 .animation(.easeInOut(duration: 0.5), value: spinAnimation)
                         }
-                        .disabled(bet <= 0) 
+                        .disabled(bet <= 0)
                     }
                 .padding()
 
@@ -158,7 +154,6 @@ struct GameView: View {
         var change = 0
         var win = false
         
-        // Определяем выигрыш
         if let number = chosenNumber {
             if number == winningNumber {
                 change = bet * 35
@@ -187,14 +182,12 @@ struct GameView: View {
                 resultMessage = "You lost! Winning number: \(winningNumber)"
             }
         }
-        
-        // Обновляем локальный баланс
+
         balance += change
         bet = 0
         chosenNumber = nil
         chosenColor = nil
         
-        // Сохраняем изменения в Firestore и обновляем статистику
         userRef.updateData([
             "balance": balance,
             "winCount": FieldValue.increment(Int64(win ? 1 : 0)),
@@ -203,7 +196,7 @@ struct GameView: View {
             if let error = error {
                 print("Error updating user data:", error.localizedDescription)
             } else {
-                checkAndRefillBalance() // выдаём 100 монет при нуле
+                checkAndRefillBalance()
             }
         }
     }
@@ -228,3 +221,4 @@ struct GameView: View {
         }
     }
 }
+

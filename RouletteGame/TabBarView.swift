@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct TabBarView: View {
     var body: some View {
         TabView {
@@ -29,9 +27,13 @@ struct TabBarView: View {
                     Image(systemName: "gearshape.fill")
                     Text("Settings")
                 }
+            
+            Online1v1View()
+                .tabItem {
+                    Image(systemName: "person.2.fill")
+                    Text("1 vs 1")
+                }
         }
     }
 }
-#Preview {
-    TabBarView()
-}
+

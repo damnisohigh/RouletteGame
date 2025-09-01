@@ -8,7 +8,7 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
-import FirebaseFirestore    
+import FirebaseFirestore
 
 struct ContentView: View {
     @State private var isSignedIn = false
@@ -45,4 +45,3 @@ struct ContentView: View {
         }
     }
 }
-
